@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Secreto</title>
+    <style>
+        body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    border: 2px solid #ffffff;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 40px 0;
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ffffff;
+    background: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 0;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cccccc;
+}
+
+button {
+    padding: 12px 25px;
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+#lista-nomes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+#lista-nomes li {
+    padding: 15px;
+    margin: 8px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.warning {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    padding: 15px;
+    border: 2px solid;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 2px solid #ffffff;
+            background: transparent;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: transparent;
+            color: #ffffff;
+            border: 2px solid #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        #lista-nomes {
+            list-style: none;
+            padding: 0;
+            border: 2px solid #ffffff;
+            min-height: 100px;
+            padding: 20px;
+        }
+
+        .warning {
+            color: #ff0000;
+            text-align: center;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎄 Amigo Secreto</h1>
+        
+        <div class="input-group">
+            <input 
+                type="text" 
+                id="nomeInput" 
+                placeholder="Digite um nome..."
+            >
+            <button onclick="adicionarNome()" id="addNome">
+                Adicionar
+            </button>
+        </div>
+
+        <ul id="lista-nomes"></ul>
+
+        <div class="warning" id="aviso"></div>
+
+        <button 
+            onclick="sortear()" 
+            class="btn-warning"
+            id="sortearBtn"
+        >
+            Realizar Sorteio!
+        </button>
+    </div>
+
+    <script>
+        let participantes = [];
+
+function adicionarNome() {
+    const input = document.getElementById('nomeInput');
+    const aviso = document.getElementById('aviso');
+    const nome = input.value.trim();
+
+// Validações
+    if (!nome) {
+        aviso.textContent = "Digite um nome válido!";
+        aviso.style.color = "#ff4444";
+        return;
+    }
+    
+    if (participantes.includes(nome)) {
+        aviso.textContent = "Nome já está na lista!";
+        aviso.style.color = "#ff4444";
+        return;
+    }
+
+// Adicionar à lista
+    participantes.push(nome);
+    input.value = '';
+    aviso.textContent = '';
+    atualizarListaNomes();
+}
+
+function atualizarListaNomes() {
+    const lista = document.getElementById('lista-nomes');
+    lista.innerHTML = participantes
+        .map(nome => `
+            <li>
+                <span>${nome}</span>
+                <button onclick="removerNome('${nome}')" class="btn-remover">X</button>
+            </li>
+        `)
+        .join('');
+}
+
+function removerNome(nome) {
+    participantes = participantes.filter(p => p !== nome);
+    atualizarListaNomes();
+}
+
+function animarSorteio() {
+    const btn = document.getElementById('sortearBtn');
+    btn.style.transform = 'scale(0.95)';
+    setTimeout(() => btn.style.transform = 'scale(1)', 100);
+}
+
+function sortear() {
+    const aviso = document.getElementById('aviso');
+    
+// Validação básica
+    if (participantes.length < 2) {
+        aviso.textContent = "Adicione pelo menos 2 participantes!";
+        aviso.style.color = "#ff4444";
+        animarSorteio();
+        return;
+    }
+
+// Algoritmo de sorteio
+    const shuffled = [...participantes].sort(() => Math.random() - 0.5);
+    const pares = new Map();
+
+// Criar pares evitando auto-sorteio
+    shuffled.forEach((nome, index) => {
+        const nextIndex = (index + 1) % shuffled.length;
+        pares.set(nome, shuffled[nextIndex]);
+    });
+
+// Exibir resultado
+    aviso.innerHTML = `
+        <div style="color: #00ff99; margin: 20px 0;">
+            Sorteio realizado! 🎉<br>
+            <button onclick="exibirPares()" style="margin-top: 15px;">
+                Revelar Pares
+            </button>
+        </div>
+    `;
+
+// Salvar pares no localStorage
+    localStorage.setItem('paresSecretos', JSON.stringify([...pares]));
+    animarSorteio();
+}
+
+function exibirPares() {
+    const pares = new Map(JSON.parse(localStorage.getItem('paresSecretos')));
+    let resultado = '🎁 Pares do Amigo Secreto:\n\n';
+    
+    pares.forEach((valor, chave) => {
+        resultado += `${chave} ➔ ${valor}\n`;
+    });
+
+    alert(resultado);
+}
+    </script>
+</body>
+</html>

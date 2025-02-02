@@ -1,0 +1,93 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 600px;
+    width: 100%;
+    border: 2px solid #ffffff;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 0 40px 0;
+    font-size: 2.5em;
+    letter-spacing: 2px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ffffff;
+    background: transparent;
+    color: #ffffff;
+    font-size: 16px;
+    border-radius: 0;
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #cccccc;
+}
+
+button {
+    padding: 12px 25px;
+    background: transparent;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #ffffff;
+    color: #000000;
+}
+
+#lista-nomes {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 30px 0;
+}
+
+#lista-nomes li {
+    padding: 15px;
+    margin: 8px 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    animation: fadeIn 0.5s ease;
+}
+
+.warning {
+    text-align: center;
+    margin: 20px 0;
+    font-weight: bold;
+    padding: 15px;
+    border: 2px solid;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
